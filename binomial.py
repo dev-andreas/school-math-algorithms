@@ -1,10 +1,17 @@
 from factorial import *
 
+def fac(x):
+    ''' Calculates n-factorial (n!) '''
+    y = 1
+    for z in range(1,x):
+        y *= z+1
+    return y
+
 def bincoef(n: int, k: int) -> int:
     ''' Binomial coefficient function "n choose k" '''
     return factorial(n)/(factorial(k)*factorial(n-k))  
 
-def pmf(k: int, n: int, p: float):
+def pmf(k: int, n: int, p: float) -> float:
     return bincoef(n, k)*(p)**k*(1-p)**(n-k)
 
 def map_pmf(k: tuple, n: int, p: float) -> tuple:
@@ -14,8 +21,8 @@ def map_pmf(k: tuple, n: int, p: float) -> tuple:
     pmf_function = lambda x: pmf(x, n, p)
     return tuple(map(pmf_function, k))
 
-def cdf(k: int, n: int, p: float):
-    return sum(pmf(range(k), n, p))
+def cdf(k: int, n: int, p: float) -> float:
+    return sum(map_pmf(range(k+1), n, p))
 
 def map_cdf(k: tuple, n: int, p: float) -> tuple:
     '''
